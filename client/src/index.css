@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-[#000000] text-gray-200 antialiased selection:bg-[#00cccc]/30 selection:text-[#00cccc];
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans text-white tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#00cccc] text-black px-6 py-2 rounded-md font-medium transition-all duration-300 hover:bg-[#33dddd] hover:shadow-[0_0_15px_#00cccc66] active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-white border border-[#27272A] px-6 py-2 rounded-md font-medium transition-all duration-300 hover:bg-white/5 hover:border-gray-500 active:scale-95;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-[#111111] border border-[#27272A] rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[#00cccc] focus:border-[#00cccc] transition-all duration-300;
+  }
+
+  .glass-card {
+    @apply bg-[#111111]/80 backdrop-blur-xl border border-white/5 shadow-2xl rounded-xl;
+  }
+}
+
+/* Custom Scrollbar for Dark Theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00cccc;
+}
