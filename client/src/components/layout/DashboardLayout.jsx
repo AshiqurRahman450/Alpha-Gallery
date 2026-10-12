@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Users, FolderKanban, Image as ImageIcon, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, FolderKanban, Image as ImageIcon, LogOut, Menu, X, KeyRound } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../../assets/logo.png';
+import ChangePasswordModal from '../common/ChangePasswordModal';
 
 const DashboardLayout = ({ children, role }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const location = useLocation();
 
   const handleLogout = async () => {
@@ -76,18 +78,28 @@ const DashboardLayout = ({ children, role }) => {
                 <div className="w-9 h-9 rounded-full bg-primary-gold/20 flex items-center justify-center text-primary-gold font-bold border border-primary-gold/30">
                   {user?.name?.charAt(0)}
                 </div>
-                <div className="overflow-hidden">
+                <div className="overflow-hidden flex-1">
                   <p className="text-sm font-medium truncate text-white">{user?.name}</p>
                   <p className="text-xs text-primary-gold/80 truncate">{user?.role}</p>
                 </div>
               </div>
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center justify-center space-x-3 px-4 py-2.5 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-all"
-              >
-                <LogOut size={18} />
-                <span className="font-medium">Logout</span>
-              </button>
+              <div className="space-y-1">
+                <button
+                  onClick={() => setIsPasswordModalOpen(true)}
+                  className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all group"
+                  title="Change Password"
+                >
+                  <KeyRound size={16} className="text-primary-gold/70 group-hover:text-primary-gold transition-colors" />
+                  <span className="font-medium">Change Password</span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-all"
+                >
+                  <LogOut size={16} />
+                  <span className="font-medium">Logout</span>
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
@@ -96,8 +108,16 @@ const DashboardLayout = ({ children, role }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top Header - Mobile spacing */}
-        <div className="lg:hidden h-16 bg-surface shadow-md border-b border-border flex items-center justify-center">
-            <img src={logo} alt="Alpha Gallery Logo" className="h-6 object-contain" />
+        <div className="lg:hidden h-16 bg-surface shadow-md border-b border-border flex items-center justify-between px-4">
+          <div className="w-8" />
+          <img src={logo} alt="Alpha Gallery Logo" className="h-6 object-contain" />
+          <button
+            onClick={() => setIsPasswordModalOpen(true)}
+            className="p-2 text-primary-gold hover:text-white bg-white/5 rounded-lg border border-white/5"
+            title="Change Password"
+          >
+            <KeyRound size={18} />
+          </button>
         </div>
         
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-4 lg:p-8 xl:p-12">
@@ -111,6 +131,12 @@ const DashboardLayout = ({ children, role }) => {
           </motion.div>
         </main>
       </div>
+
+      {/* Change Password Modal */}
+      <ChangePasswordModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      />
     </div>
   );
 };
