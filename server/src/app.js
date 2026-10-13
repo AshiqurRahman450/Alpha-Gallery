@@ -32,8 +32,9 @@ app.use('/api/public', require('./routes/publicRoutes'));
 
 // Basic route
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('Hello, backend is running!');
 });
+
 
 // Error handler middleware (to be added)
 
