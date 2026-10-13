@@ -22,9 +22,10 @@ const uploadMedia = async (req, res) => {
       return res.status(400).json({ message: 'No files uploaded' });
     }
 
+    const protocol = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : req.protocol);
     const mediaItems = req.files.map((file, index) => {
       const isVideo = file.mimetype.startsWith('video/');
-      const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      const fileUrl = `${protocol}://${req.get('host')}/uploads/${file.filename}`;
       return {
         projectId: project._id,
         uploadedBy: req.user._id,
@@ -124,9 +125,10 @@ const uploadGlobalMedia = async (req, res) => {
       assignedBdm = bdmId;
     }
 
+    const protocol = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : req.protocol);
     const mediaItems = req.files.map((file, index) => {
       const isVideo = file.mimetype.startsWith('video/');
-      const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      const fileUrl = `${protocol}://${req.get('host')}/uploads/${file.filename}`;
       return {
         uploadedBy: req.user._id,
         assignedBdm: assignedBdm,
