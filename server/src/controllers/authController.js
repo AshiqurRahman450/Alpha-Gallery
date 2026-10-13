@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
       res.cookie('jwt', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       });
 
@@ -39,6 +39,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         role: user.role,
         isActive: user.isActive,
+        token,
       });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
