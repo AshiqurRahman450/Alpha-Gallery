@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://187.126.124.39:5001/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://api.alphaelevators.io/api',
   withCredentials: true, // Important for cookies
 });
 
